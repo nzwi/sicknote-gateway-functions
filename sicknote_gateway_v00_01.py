@@ -1,12 +1,19 @@
+##
+# Title: Python functions to communicate with the sicknote smart contract hosted in the Blockchain
+# Version: v00_01
+# Author: Nzwisisa Chidembo <nzwisisa@gmail.com>
+##
+
 import os
 from web3 import Web3, HTTPProvider, Account
 
 """
+####################Sample requests######################
 testEvent = {
     "request": {
         "type": "GetLastSickNote",
         "data": {
-            "patientId": 8410285963180
+            "patientId": 00000000000
         }
     }
 }
@@ -15,10 +22,10 @@ testEvent = {
     "request": {
         "type": "AddNote",
         "data": {
-            "practiceNo": 667788,
-            "patientId": 8410285963180,
-            "sickDays": 2,
-            "illnessDescription": "Toe hurting"
+            "practiceNo": 000000000,
+            "patientId": 0000000000,
+            "sickDays": 0,
+            "illnessDescription": "xxxxxxxxxxxx"
         }
     }
 }
@@ -27,10 +34,10 @@ testEvent = {
     "request": {
         "type": "AddPatient",
         "data": {
-            "practiceNo": 667788,
-            "patientId": 8410285963180,
-            "firstName": "Goodluck",
-            "lastName": "Jonathan"
+            "practiceNo": 0000000000,
+            "patientId": 0000000000000000,
+            "firstName": "xxxxxxxxxxxxx",
+            "lastName": "xxxxxxxxxxxx"
         }
     }
 }
@@ -39,30 +46,22 @@ testEvent = {
     "request": {
         "type": "AddDoctor",
         "data": {
-            "practiceNo": 667788,
-            "firstName": "Pinky",
-            "lastName": "Zulu",
-            "physicalAddress": "3 Pine, Ferndale, Randburg, 2655",
-            "phoneNo": "0725552398"
+            "practiceNo": 000000,
+            "firstName": "xxxxxxxxxxx",
+            "lastName": "xxxxxxxxxx",
+            "physicalAddress": "xxxxxxxxxxxx",
+            "phoneNo": "0000000000000"
         }
     }
 }
 
-settings = {
-    "httpProvider": os.environ['httpProvider'],
-    "contractAddress": os.environ['contractAddress'],
-    "adminWalletAddress": os.environ['adminWalletAddress'],
-    "adminWalletPrivateKey": os.environ['adminWalletPrivateKey'],
-    "chainId": os.environ['chainId'],
-    "gas": os.environ['gas'],
-    "gasPrice": os.environ['gasPrice']
-}
 """
+###################Infura API, Contract, Wallet Settings#######################
 settings = {
-    "httpProvider": "https://ropsten.infura.io/v3mvvmXsrXTl0DxgtPjN",
-    "contractAddress": "0x46817097CaD67011b7749D64325A802b8D7F730D",
-    "adminWalletAddress": "0xc173354F5Fbf628ff3AfBB8Be46F042015A7035c",
-    "adminWalletPrivateKey": "80a15098a285927dfe436e675a6920c8de5000513ba6f5d34d1c26afbc88f2b7",
+    "httpProvider": "",
+    "contractAddress": "",
+    "adminWalletAddress": "",
+    "adminWalletPrivateKey": "",
     "chainId": 3,
     "gas": 2000000,
     "gasPrice": 10000000000
@@ -154,7 +153,8 @@ def buildCallSuccessResponse(data):
 def lambda_handler(event, context):
     contract_abi = ''
 
-    with open('contract_abi.txt','r') as f:
+    #You will need to read from your contract's ABI below
+    with open('xxxxxxxxxxxxx.txt','r') as f:
         contract_abi = eval(f.read())
 
     infura_provider = HTTPProvider(settings['httpProvider'])
@@ -185,5 +185,3 @@ def lambda_handler(event, context):
         tx_hash = web3.eth.sendRawTransaction(signed_txn.rawTransaction).hex()
 
         return buildSuccessResponse(tx_hash)
-
-#print(lambda_handler(testEvent,[]))
